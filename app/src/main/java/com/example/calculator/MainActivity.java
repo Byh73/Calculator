@@ -5,8 +5,10 @@ import static com.example.calculator.Methods.getStringNumberWithUnderScope;
 import static com.example.calculator.Methods.*;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -66,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Buttons
 
+        Button next = findViewById(R.id.nextTo);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("RESULT", result.getText().toString());
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("BUNDLE", bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         // digits
         Button[] digitButtons = {findViewById(R.id.one_button), findViewById(R.id.two_button), findViewById(R.id.three_button),
                 findViewById(R.id.zero_button), findViewById(R.id.four_button), findViewById(R.id.five_button), findViewById(R.id.six_button),
@@ -87,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         for (Button digitButton : digitButtons) {
 
             digitButton.setOnClickListener(view -> {
+                next.setVisibility(View.GONE);
+
 
                 String firstIntegerNumber = getDecimalFormatString(firstOperand, integerFormat);
                 if ((firstIntegerNumber.length() == 10 && operator == null) ||
@@ -148,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         for (Button operationButton : operationButtons) {
 
             operationButton.setOnClickListener(view -> {
-
+                next.setVisibility(View.GONE);
                 Button button = (Button) view;
                 lastOperator = button;
                 changeColorOfOperationButton(button);
@@ -169,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
         // other
         commaButton.setOnClickListener(view -> {
+            next.setVisibility(View.GONE);
 
             Double lastNumber = getLastNumber();
             String integerNumber = getDecimalFormatString(lastNumber, integerFormat);
@@ -199,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         changeSignButton.setOnClickListener(view -> {
-
+            next.setVisibility(View.GONE);
             if (secondOperand != null) {
                 secondOperand = -secondOperand;
             } else {
@@ -211,13 +229,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         clearButton.setOnClickListener(view -> {
-
+            next.setVisibility(View.GONE);
             clear();
             updateInfo();
 
         });
 
         percentButton.setOnClickListener(view -> {
+            next.setVisibility(View.GONE);
 
             if (operator != null && secondOperand != null) {
                 switch (operator) {
@@ -245,6 +264,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         equalButton.setOnClickListener(view -> {
+
+            next.setVisibility(View.VISIBLE);
+
 
             if (operator != null && secondOperand != null) {
                 calculate();

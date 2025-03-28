@@ -34,6 +34,16 @@
                 />
         </HorizontalScrollView>
     </FrameLayout>
+    <Button android:id="@+id/nextTo"
+        android:text="Next"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/active_line_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/buttons"
